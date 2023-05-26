@@ -1,7 +1,7 @@
 @import "../../../css-config/mixins.scss";
 
 .product-card{
-    width: calc(100% - 5px);
+    width: calc(50% - 5px);
     margin-bottom: 1.25rem;
     @include md{
         width: calc(25% - 0.938rem);

@@ -7,13 +7,14 @@
     }
     .categories{
         display: flex;
+        align-items: center;
         flex-flow: wrap;
         gap: 0.625rem;
-        justify-content: spa;
+        
         .category{
             background: #000;
             cursor: pointer;
-            width: calc(100% - 0.313rem);
+            width: calc(50% - 0.313rem);
             overflow: hidden;
             @include md{
                 width: calc(25% - 0.625rem);
