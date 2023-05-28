@@ -9,39 +9,59 @@ import {
   FaCartPlus,
 } from "react-icons/fa";
 
-import prod from "../../assets/products/earbuds-prod-1.webp";
+import { useParams } from "react-router-dom";
+
+
+
+// import prod from "../../assets/products/earbuds-prod-1.webp";
+import useFetch from '../../hooks/useFetch'
+import { useState } from "react";
 const SingleProduct = () => {
+  const[quantity,setQuantity]= useState(1);
+
+  const handleIncrement = ()=>{
+    setQuantity(prevQuantity=>prevQuantity+1);
+  }
+
+  const handleDecrement = ()=>{
+    setQuantity(prevQuantity=>{
+      if(prevQuantity===1)return 1;
+      return prevQuantity-1
+    })
+  }
+  
+  const {id} = useParams()
+  // console.log(id);
+  const {data} = useFetch(`/api/products?populate=*&[filters][id]=${id}`)
+
+  if(!data)return;
+
+  const productData = data.data[0].attributes;
+  // console.log(productData);
+
+
+
   return (
     <div className="single-product-main-content">
       <div className="layout">
         <div className="single-product-page">
           <div className="left">
-            <img src={prod} alt="" />
+            <img src={process.env.REACT_APP_DEV_URL + productData.img.data[0].attributes.url} alt="" />
           </div>
           <div className="right">
             <div className="product-name">
-              boAt Iris | Round Dial Smart Watch with 1.39" AMOLED Display,
-              Multiple Watch Faces
+              {productData.title}
             </div>
-            <div className="price">¥4499</div>
+            <div className="price">&#8377;{productData.price}</div>
             <div className="prod-desc">
-              Shoutout to all who see the glass half full. It is time to switch
-              over to the bright side. Watch Iris will get you through the week
-              with a 7-day battery backup. Thrive through your success with all
-              the important notifications on your smartwatch. The timeless look
-              comes with multiple watch faces and strap options to go with all
-              versions of your style. Nail every sport you play with 8 active
-              sports modes tracking your performance. Don't worry about sweat
-              and water, it is IP68. Being healthy is an imperative when your
-              watch has a heart rate monitor, oxygen level monitor, sedentary
-              reminder tracking your health 24x7. Pump up your style!
+             {productData.description}
             </div>
 
             <div className="cart-buttons">
               <div className="quantity-buttons">
-                <span>-</span>
-                <span>5</span>
-                <span>+</span>
+                <span onClick={handleDecrement}>-</span>
+                <span>{quantity}</span>
+                <span onClick={handleIncrement}>+</span>
               </div>
               <button className="add-to-cart-btn">
                 <FaCartPlus size={20} />
@@ -53,7 +73,7 @@ const SingleProduct = () => {
               <div className="info-item">
                 <span className="text-bold">
                   Category:
-                  <span> Headphones</span>
+                  <span> {productData.categories.data[0].attributes.title}</span>
                 </span>
 
                 <span className="text-bold">
@@ -70,7 +90,7 @@ const SingleProduct = () => {
               </div>
           </div>
         </div>
-        <RelatedProducts/>
+        <RelatedProducts productID={id} categoryID={productData.categories.data[0].id}/>
       </div>
     </div>
   );

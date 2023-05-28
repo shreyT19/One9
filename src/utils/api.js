@@ -18,3 +18,5 @@ export const fetchDataFromAPI = async (url) => {
     return error;
   }
 };
+
+export default fetchDataFromAPI;

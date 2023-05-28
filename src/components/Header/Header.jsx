@@ -11,6 +11,8 @@ import Cart from "../Cart/Cart";
 import { Context } from "../../utils/context";
 
 const Header = () => {
+
+  const navigate =useNavigate();
   
   const[scrolled,setScrolled]=useState(false);
   const[showCart,setShowCart]=useState(false);
@@ -36,11 +38,11 @@ const Header = () => {
     <header className={`main-header ${scrolled? "sticky-nav":""}`}>
       <div className="header-container">
         <ul className="left">
-          <li>Home</li>
+          <li onClick={()=>navigate('/')}>Home</li>
           <li>About</li>
           <li>Categories</li>
         </ul>
-        <div className="center">One9</div>
+        <div className="center" onClick={()=>navigate('/')}>One9</div>
         <div className="right">
           <TbSearch onClick={()=>setShowSearch(!showSearch)} />
           <AiOutlineHeart />
