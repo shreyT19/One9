@@ -5,7 +5,7 @@ import Category from "./Category/Category.jsx";
 import Products from "../Products/Products";
 // import SingleProduct from "../SingleProduct/SingleProduct";
 
-import fetchDataFromAPI from "../../utils/api";
+import {fetchDataFromAPI} from "../../utils/api";
 import { Context } from "../../utils/context";
 const Home = () => {
   const { categories, setCategories, products, setProducts } =
